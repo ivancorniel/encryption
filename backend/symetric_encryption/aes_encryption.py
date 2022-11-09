@@ -16,7 +16,8 @@ class AESEncryption:
         iv = bytes.fromhex(hex_iv)
         cipher = Cipher(algorithms.AES(key), modes.CBC(iv))
         decryptor = cipher.decryptor()
-        decrypted_data = decryptor.update(bytes.fromhex(data)) + decryptor.finalize()
+        decrypted_data = decryptor.update(
+            bytes.fromhex(data)) + decryptor.finalize()
         return decrypted_data if raw else cls.decode_and_strip(decrypted_data)
 
     @classmethod
@@ -27,4 +28,3 @@ class AESEncryption:
         encryptor = cipher.encryptor()
         encrypted_data = encryptor.update(padded_data) + encryptor.finalize()
         return encrypted_data.hex()
-
