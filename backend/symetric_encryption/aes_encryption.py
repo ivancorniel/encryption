@@ -20,10 +20,11 @@ class AESEncryption:
             bytes.fromhex(data)) + decryptor.finalize()
         return decrypted_data if raw else cls.decode_and_strip(decrypted_data)
 
-    @classmethod
+    @ classmethod
     def encrypt(cls, key: str, iv: str, data: str, raw: bool = False) -> Union[str, bytes]:
         padder = padding.PKCS7(128).padder()
         padded_data = padder.update(data)
+        padded_data += padder.finalize()
         cipher = Cipher(algorithms.AES(key), modes.CBC(iv))
         encryptor = cipher.encryptor()
         encrypted_data = encryptor.update(padded_data) + encryptor.finalize()
